@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    postgresql: postgresql
+  name: postgresql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      postgresql: postgresql
+  template:
+    metadata:
+      labels:
+        postgresql: postgresql
+    spec:
+      containers:
+        - name: postgresql
+          image: bitnami/postgresql:latest
+          env:
+            - name: POSTGRESQL_PASSWORD
+              value: postgres
+          volumeMounts:
+            - name: postgres-config-volume
+              mountPath: /bitnami/postgresql/conf/postgresql.conf
+              subPath: postgresql.conf
+          ports:
+            - containerPort: 5432 # original port 5432
+      hostname: postgresql
+      volumes:
+        - name: postgres-config-volume
+          configMap:
+            name: postgres-config
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-config
+data:
+  postgresql.conf: |
+    wal_level = logical
+    listen_addresses = '0.0.0.0'

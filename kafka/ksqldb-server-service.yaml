@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose --file docker-compose.yml convert
+    kompose.version: 1.34.0 (HEAD)
+  labels:
+    io.kompose.service: ksqldb-server
+  name: ksqldb-server
+spec:
+  type: ClusterIP
+  ports:
+    - name: "28088"
+      port: 28088
+      targetPort: 28088
+  selector:
+    io.kompose.service: ksqldb-server

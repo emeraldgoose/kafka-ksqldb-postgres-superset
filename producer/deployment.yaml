@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app
+  labels:
+    app: app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app
+  template:
+    metadata:
+      labels:
+        app: app
+    spec:
+      containers:
+          - image: app:latest
+            imagePullPolicy: Never
+            name: app
+            command: ["python", "/home/main.py"]
+            args: ["--dbuser", "postgres", "--password", "postgres", "--host", "postgresql.postgres.svc.cluster.local", "--port", "5432", "--dbname", "postgres"]
+      hostname: app
