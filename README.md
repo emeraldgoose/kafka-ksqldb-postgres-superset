@@ -29,7 +29,7 @@ extraSecretEnv:
     SUPERSET_SECRET_KEY: write here
 ```
 ```
-helm install superset superset/superset -n superset
+helm install superset superset/superset -n superset -f superset/values.yaml
 ```
 or
 ```
