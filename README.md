@@ -20,7 +20,6 @@ helm repo add superset http://apache.github.io/superset/
 helm repo update
 ```
 ### SUPERSET_SECRET_KEY
-1. static
 ```
 openssl rand -base64 42
 ```
@@ -32,7 +31,7 @@ extraSecretEnv:
 ```
 helm install superset superset/superset -n superset
 ```
-2. dynamic
+or
 ```
 helm install superset superset/superset -n superset --set envSecretEnv.SUPERSET_SECRET_KEY=$(openssl rand -base64 42)
 ```
